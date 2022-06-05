@@ -5,3 +5,7 @@ api-version: 1.18
 authors: [ Chicle ]
 description: Sus
 website: https://github.com/Eschiclers/AmongSteves
+commands:
+  change:
+    description: Cambia el estado
+    usage: /change
