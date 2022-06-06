@@ -2,7 +2,6 @@ package dev.chicle.amongsteves;
 
 import dev.chicle.amongsteves.command.SetupCommand;
 import dev.chicle.amongsteves.gamemanager.GameManager;
-import dev.chicle.amongsteves.gamestate.GameState;
 import dev.chicle.amongsteves.listener.SetupListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
