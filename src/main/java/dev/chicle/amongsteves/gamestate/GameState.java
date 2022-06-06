@@ -1,37 +1,48 @@
 package dev.chicle.amongsteves.gamestate;
 
-import dev.chicle.amongsteves.gamestate.event.GameStateChangeEvent;
-import org.bukkit.Bukkit;
+import java.util.HashMap;
+import java.util.Map;
 
 public enum GameState {
-    IN_LOBBY, IN_GAME, IN_DISCUSSION, IN_VOTING, FINISHED;
+    IN_LOBBY("in_lobby", "En el lobby"),
+    IN_GAME("in_game", "En partida"),
+    IN_DISCUSSION("in_discussion", "En discusión"),
+    IN_VOTE("in_vote", "En votación"),
+    FINISHED("finished", "Finalizada");
 
-    private static GameState _currentState = IN_LOBBY;
+    private final String name;
+    private final String label;
 
-    public static void setState(GameState state) {
-        Bukkit.getPluginManager().callEvent(new GameStateChangeEvent(getState(), state));
-        GameState._currentState = state;
+    GameState(String name, String label) {
+        this.name = name;
+        this.label = label;
     }
 
-    public static GameState getState() {
-        return _currentState;
+    public String getName() {
+        return name;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    private static final Map<String, GameState> byName = new HashMap<>();
+
+    static {
+        for(GameState state : values()) {
+            byName.put(state.getName(), state);
+        }
+    }
+
+    public static GameState byName(String name) {
+        return byName.get(name);
     }
 
     @Override
     public String toString() {
-        switch (this) {
-            case IN_LOBBY:
-                return "En lobby";
-            case IN_GAME:
-                return "En juego";
-            case IN_DISCUSSION:
-                return "En discusión";
-            case IN_VOTING:
-                return "En votación";
-            case FINISHED:
-                return "Finalizado";
-            default:
-                return "";
-        }
+        return label;
     }
+
+
+
 }
