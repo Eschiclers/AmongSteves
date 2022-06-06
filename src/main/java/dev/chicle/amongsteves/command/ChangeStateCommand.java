@@ -1,4 +1,4 @@
-package dev.chicle.amongsteves.commands;
+package dev.chicle.amongsteves.command;
 
 import dev.chicle.amongsteves.gamestate.GameState;
 import org.bukkit.command.Command;
