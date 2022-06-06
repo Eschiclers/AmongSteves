@@ -27,7 +27,8 @@ repositories {
     */
     maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
     maven { url = 'https://oss.sonatype.org/content/repositories/central' }
-    mavenLocal() // This is needed for CraftBukkit and Spigot.
+    mavenLocal()
+    mavenCentral() // This is needed for CraftBukkit and Spigot.
 }
 
 dependencies {
@@ -35,6 +36,10 @@ dependencies {
     // The Spigot API with no shadowing. Requires the OSS repo.
     compileOnly 'org.spigotmc:spigot:1.18.2-R0.1-SNAPSHOT'
     // The full Spigot server with no shadowing. Requires mavenLocal.
+
+    // https://projectlombok.org
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
 
 tasks.register("jarAndCopy") {
