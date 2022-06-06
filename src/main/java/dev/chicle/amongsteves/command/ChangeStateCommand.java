@@ -6,10 +6,15 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class ChangeStateCommand implements CommandExecutor {
+
+public class ChangeStateCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -29,5 +34,17 @@ public class ChangeStateCommand implements CommandExecutor {
 
         p.sendMessage(AmongSteves.chatPrefix + ChatColor.GREEN + "Estado cambiado a " + state);
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        if (!(sender instanceof Player)) return null;
+
+        if (command.getName().equals("change")) {
+            if (args.length == 1) {
+                return Stream.of(GameState.values()).map(GameState::name).collect(Collectors.toList());
+            }
+        }
+        return null;
     }
 }
