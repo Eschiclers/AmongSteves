@@ -42,7 +42,11 @@ public class ChangeStateCommand implements CommandExecutor, TabCompleter {
 
         if (command.getName().equals("change")) {
             if (args.length == 1) {
-                return Stream.of(GameState.values()).map(GameState::name).collect(Collectors.toList());
+                // Return a list of states that contains the given string
+                return Stream.of(GameState.values())
+                        .filter(state -> state.name().toLowerCase().contains(args[0].toLowerCase()))
+                        .map(GameState::name)
+                        .collect(Collectors.toList());
             }
         }
         return null;
