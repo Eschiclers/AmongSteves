@@ -18,7 +18,7 @@ public class ChangeStateCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(!(sender instanceof Player)) return false;
+        if(!(sender instanceof Player)) return true;
         Player p = (Player) sender;
 
         if(args.length < 1) return false;

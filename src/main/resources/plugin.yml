@@ -9,3 +9,9 @@ commands:
   change:
     description: Cambia el estado
     usage: /change <state>
+  startgame:
+    description: Inicia la partida
+    usage: /startgame
+  endgame:
+    description: Finaliza la partida
+    usage: /endgame
