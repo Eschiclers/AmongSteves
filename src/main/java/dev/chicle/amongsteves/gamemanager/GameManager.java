@@ -1,8 +1,7 @@
 package dev.chicle.amongsteves.gamemanager;
 
 import dev.chicle.amongsteves.gamemanager.player.ASPlayer;
-import dev.chicle.amongsteves.gamestate.GameState;
-import dev.chicle.amongsteves.gamestate.event.GameStateChangeEvent;
+import dev.chicle.amongsteves.event.GameStateChangeEvent;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -58,6 +57,7 @@ public class GameManager {
     }
 
     public static ASPlayer getPlayer(Player player) {
+        if (players == null) return null;
         for (ASPlayer p : players) {
             if (p.getPlayer() == player) {
                 return p;

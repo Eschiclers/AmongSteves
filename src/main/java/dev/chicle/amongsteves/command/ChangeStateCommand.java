@@ -1,7 +1,7 @@
 package dev.chicle.amongsteves.command;
 
 import dev.chicle.amongsteves.AmongSteves;
-import dev.chicle.amongsteves.gamestate.GameState;
+import dev.chicle.amongsteves.gamemanager.GameState;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

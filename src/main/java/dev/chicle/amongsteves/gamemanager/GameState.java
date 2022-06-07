@@ -1,9 +1,4 @@
-package dev.chicle.amongsteves.gamestate;
-
-import org.bukkit.entity.EntityType;
-
-import java.util.HashMap;
-import java.util.Map;
+package dev.chicle.amongsteves.gamemanager;
 
 public enum GameState {
     /**

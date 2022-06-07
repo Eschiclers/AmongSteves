@@ -1,6 +1,6 @@
-package dev.chicle.amongsteves.gamestate.event;
+package dev.chicle.amongsteves.event;
 
-import dev.chicle.amongsteves.gamestate.GameState;
+import dev.chicle.amongsteves.gamemanager.GameState;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
