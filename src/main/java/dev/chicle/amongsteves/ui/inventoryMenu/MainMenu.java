@@ -37,10 +37,6 @@ public class MainMenu implements Listener, CommandExecutor {
             *  18, 19, 20, 21, 22, 23, 24, 25, 26]
          */
 
-        //inv.addItem(createGuiItem(Material.STICK, "Palo maestro", ChatColor.GREEN + "Con lore y todo", ChatColor.BLUE + "Que ademas se expande"));
-        //inv.addItem(createGuiItem(Material.STICK, "Palo normal", "un palo"));
-
-
         inv.setItem(10, createGuiItem(Material.STICK, "Palo maestro", ChatColor.GREEN + "Con lore y todo", ChatColor.BLUE + "Que ademas se expande"));
         inv.setItem(11, createGuiItem(Material.STICK, "Palo normal", "un palo"));
         inv.setItem(16, createGuiItem(Material.BARRIER, "Salir"));
