@@ -1,0 +1,16 @@
+language: es_es
+locations:
+  lobby:
+    coords:
+      x: 118.5
+      y: 39
+      z: 388.5
+      yaw: -180.0
+      pitch: 0.0
+  start:
+    coords:
+      x: 118.5
+      y: 34.5
+      z: 385.85
+      yaw: 0.0
+      pitch: 0.0
