@@ -5,6 +5,7 @@ import dev.chicle.amongsteves.event.GameStateChangeEvent;
 import dev.chicle.amongsteves.gamemanager.player.PlayerRole;
 import lombok.Getter;
 import org.bukkit.*;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -92,6 +93,9 @@ public class GameManager {
                 player.getPlayer().sendTitle(crewmateTitle, crewmateSubtitle, 10, 20, 10);
             }
             player.getPlayer().setGameMode(GameMode.ADVENTURE);
+
+            player.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(2.0);
+            player.getPlayer().setHealth(player.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
         }
     }
 }
