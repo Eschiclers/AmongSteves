@@ -1,7 +1,5 @@
 package dev.chicle.amongsteves.gamemanager.player;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 
@@ -10,6 +8,7 @@ public class ASPlayer {
     private PlayerRole role;
     private PlayerColor color;
     private boolean actionCooldown;
+    private ASProgressBar actionBar;
     private boolean isDead;
 
     public ASPlayer(Player player, boolean isDead) {
@@ -18,6 +17,8 @@ public class ASPlayer {
         this.role = PlayerRole.NONE;
         // Color aleatorio sacado de los enums
         this.color = PlayerColor.values()[(int) (Math.random() * PlayerColor.values().length)];
+        this.actionCooldown = false;
+        this.actionBar = new ASProgressBar(100.0f);
     }
 
     public Player getPlayer() {
@@ -58,5 +59,13 @@ public class ASPlayer {
 
     public void setActionCooldown(boolean actionCooldown) {
         this.actionCooldown = actionCooldown;
+    }
+
+    public ASProgressBar getActionBar() {
+        return actionBar;
+    }
+
+    public void setActionBar(ASProgressBar actionBar) {
+        this.actionBar = actionBar;
     }
 }
