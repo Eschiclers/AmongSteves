@@ -1,4 +1,11 @@
 language: es_es
+
+# Minimum players to start
+minPlayers: 4
+# Maximum impostors
+maxImpostors: 1
+
+# Game locations
 locations:
   lobby:
     coords:

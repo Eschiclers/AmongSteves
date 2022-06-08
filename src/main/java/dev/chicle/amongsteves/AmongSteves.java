@@ -15,7 +15,7 @@ public final class AmongSteves extends JavaPlugin {
 
     public static final String chatPrefix = ChatColor.AQUA + "[AmongSteves] " + ChatColor.RESET;
 
-    public static GameManager GameManager = new GameManager();
+    public static GameManager GameManager;
 
     @Override
     public void onEnable() {
@@ -23,6 +23,8 @@ public final class AmongSteves extends JavaPlugin {
         new SetupConfiguration(this);
         new SetupListener(this);
         new SetupCommand(this);
+
+        GameManager = new GameManager(this);
     }
 
     @Override

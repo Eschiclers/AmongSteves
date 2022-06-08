@@ -2,27 +2,34 @@ package dev.chicle.amongsteves.gamemanager;
 
 import dev.chicle.amongsteves.gamemanager.player.ASPlayer;
 import dev.chicle.amongsteves.event.GameStateChangeEvent;
+import dev.chicle.amongsteves.gamemanager.player.PlayerRole;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static org.bukkit.Bukkit.getLogger;
 
 public class GameManager {
+    private Plugin plugin;
+
     @Getter
     private static GameState state;
     private static List<ASPlayer> players = new ArrayList<>();
 
     // Ajustes del juego
-    @Getter private static int maxPlayers = 6;
-    @Getter private static int minPlayers = 10;
-    @Getter private static int maxImpostors = 1;
+    @Getter private static int minPlayers;
+    @Getter private static int maxImpostors;
 
-    public GameManager() {
+    public GameManager(Plugin plugin) {
+        this.plugin = plugin;
         state = GameState.IN_LOBBY;
+        minPlayers = plugin.getConfig().getInt("minPlayers", 4);
+        maxImpostors = plugin.getConfig().getInt("maxImpostors", 1);
     }
 
     /**
@@ -56,6 +63,27 @@ public class GameManager {
     }
 
     public static void startGame() {
-        setState(GameState.IN_GAME);
+        GameManager.setState(GameState.IN_GAME);
+
+        List<ASPlayer> impostors = new ArrayList<>();
+
+        Random random = new Random();
+
+        while (impostors.size() < GameManager.getMaxImpostors()) {
+            ASPlayer impostor = GameManager.getPlayers().get(random.nextInt(GameManager.getPlayers().size()));
+            if (impostors.contains(impostor)) continue;
+            impostors.add(impostor);
+            impostor.setRole(PlayerRole.IMPOSTOR);
+        }
+
+        for (ASPlayer player : GameManager.getPlayers()) {
+            if (player.getRole() == PlayerRole.NONE) {
+                player.setRole(PlayerRole.CREWMATE);
+            }
+
+            player.getPlayer().sendTitle(PlayerRole.IMPOSTOR.name(), "", 10, 20, 10);
+        }
+
+        //sender.sendMessage("Eres " + GameManager.getPlayer((Player) sender).getRole().toString() + ". " + impostors.size() + "/" + GameManager.getMaxImpostors() + ".");
     }
 }
