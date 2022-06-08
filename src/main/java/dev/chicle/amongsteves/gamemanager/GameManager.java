@@ -83,7 +83,5 @@ public class GameManager {
 
             player.getPlayer().sendTitle(PlayerRole.IMPOSTOR.name(), "", 10, 20, 10);
         }
-
-        //sender.sendMessage("Eres " + GameManager.getPlayer((Player) sender).getRole().toString() + ". " + impostors.size() + "/" + GameManager.getMaxImpostors() + ".");
     }
 }

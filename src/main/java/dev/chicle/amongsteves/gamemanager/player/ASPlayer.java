@@ -1,6 +1,7 @@
 package dev.chicle.amongsteves.gamemanager.player;
 
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
 
 public class ASPlayer {
     private final Player player;
@@ -42,5 +43,9 @@ public class ASPlayer {
 
     public void setDead(boolean isDead){
         this.isDead = isDead;
+    }
+
+    public void setScoreboard(Scoreboard scoreboard){
+        player.setScoreboard(scoreboard);
     }
 }
