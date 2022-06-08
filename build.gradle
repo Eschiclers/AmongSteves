@@ -1,4 +1,5 @@
 plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'java'
 }
 
@@ -16,6 +17,8 @@ repositories {
             includeGroup 'org.spigotmc'
         }
     }
+    maven { url = 'https://repo.minebench.de/' }
+
     /*
      As Spigot-API depends on the BungeeCord ChatComponent-API,
     we need to add the Sonatype OSS repository, as Gradle,
@@ -37,13 +40,15 @@ dependencies {
     compileOnly 'org.spigotmc:spigot:1.19-R0.1-SNAPSHOT'
     // The full Spigot server with no shadowing. Requires mavenLocal.
 
+    implementation group: 'de.themoep', name: 'inventorygui', version: '1.5-SNAPSHOT'
+
     // https://projectlombok.org
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
 
 tasks.register("jarAndCopy") {
-    dependsOn jar
+    dependsOn shadowJar
     doLast {
         copy {
             from layout.buildDirectory.dir('libs/AmongSteves-1.0-SNAPSHOT.jar')
@@ -66,6 +71,12 @@ tasks.withType(JavaCompile).configureEach {
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
         options.release = targetJavaVersion
     }
+}
+
+shadowJar {
+    archiveBaseName.set(project.name)
+    archiveClassifier.set("")
+    archiveVersion.set(project.version)
 }
 
 processResources {
