@@ -4,7 +4,7 @@ import dev.chicle.amongsteves.gamemanager.player.ASPlayer;
 import dev.chicle.amongsteves.event.GameStateChangeEvent;
 import dev.chicle.amongsteves.gamemanager.player.PlayerRole;
 import lombok.Getter;
-import org.bukkit.Bukkit;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -16,6 +16,7 @@ import static org.bukkit.Bukkit.getLogger;
 
 public class GameManager {
     private Plugin plugin;
+    static World world = Bukkit.getServer().getWorlds().get(0);
 
     @Getter
     private static GameState state;
@@ -65,6 +66,11 @@ public class GameManager {
     public static void startGame() {
         GameManager.setState(GameState.IN_GAME);
 
+        world.setDifficulty(Difficulty.PEACEFUL);
+
+        String impostorTitle = ChatColor.RED + PlayerRole.IMPOSTOR.name();
+        String impostorSubtitle = "Acaba con todos los tripulantes";
+
         List<ASPlayer> impostors = new ArrayList<>();
 
         Random random = new Random();
@@ -74,14 +80,18 @@ public class GameManager {
             if (impostors.contains(impostor)) continue;
             impostors.add(impostor);
             impostor.setRole(PlayerRole.IMPOSTOR);
+            impostor.getPlayer().sendTitle(impostorTitle, impostorSubtitle, 10, 20, 10);
         }
+
+        String crewmateTitle = ChatColor.AQUA + PlayerRole.CREWMATE.name();
+        String crewmateSubtitle = "Hay " + ChatColor.RED + impostors.size() + (impostors.size() > 1 ? " impostores " : " impostor ") + ChatColor.WHITE + "entre nosotros";
 
         for (ASPlayer player : GameManager.getPlayers()) {
             if (player.getRole() == PlayerRole.NONE) {
                 player.setRole(PlayerRole.CREWMATE);
+                player.getPlayer().sendTitle(crewmateTitle, crewmateSubtitle, 10, 20, 10);
             }
-
-            player.getPlayer().sendTitle(PlayerRole.IMPOSTOR.name(), "", 10, 20, 10);
+            player.getPlayer().setGameMode(GameMode.ADVENTURE);
         }
     }
 }
