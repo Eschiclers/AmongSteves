@@ -1,5 +1,7 @@
 package dev.chicle.amongsteves.gamemanager.player;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 
@@ -7,6 +9,7 @@ public class ASPlayer {
     private final Player player;
     private PlayerRole role;
     private PlayerColor color;
+    private boolean actionCooldown;
     private boolean isDead;
 
     public ASPlayer(Player player, boolean isDead) {
@@ -17,35 +20,43 @@ public class ASPlayer {
         this.color = PlayerColor.values()[(int) (Math.random() * PlayerColor.values().length)];
     }
 
-    public Player getPlayer(){
+    public Player getPlayer() {
         return player;
     }
 
-    public PlayerRole getRole(){
+    public PlayerRole getRole() {
         return role;
     }
 
-    public PlayerColor getColor(){
+    public PlayerColor getColor() {
         return color;
     }
 
-    public void setColor(PlayerColor color){
+    public void setColor(PlayerColor color) {
         this.color = color;
     }
 
-    public void setRole(PlayerRole role){
+    public void setRole(PlayerRole role) {
         this.role = role;
     }
 
-    public boolean isDead(){
+    public boolean isDead() {
         return isDead;
     }
 
-    public void setDead(boolean isDead){
+    public void setDead(boolean isDead) {
         this.isDead = isDead;
     }
 
-    public void setScoreboard(Scoreboard scoreboard){
+    public void setScoreboard(Scoreboard scoreboard) {
         player.setScoreboard(scoreboard);
+    }
+
+    public boolean isActionCooldown() {
+        return actionCooldown;
+    }
+
+    public void setActionCooldown(boolean actionCooldown) {
+        this.actionCooldown = actionCooldown;
     }
 }
