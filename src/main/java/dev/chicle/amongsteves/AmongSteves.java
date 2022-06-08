@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings("unused")
 public final class AmongSteves extends JavaPlugin {
+    private static AmongSteves instance;
     FileConfiguration config = getConfig();
 
     public static final String chatPrefix = ChatColor.AQUA + "[AmongSteves] " + ChatColor.RESET;
@@ -19,6 +20,7 @@ public final class AmongSteves extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        instance = this;
         // Plugin startup logic
         new SetupConfiguration(this);
         new SetupListener(this);
@@ -30,5 +32,9 @@ public final class AmongSteves extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+
+    public static AmongSteves getInstance(){
+        return instance;
     }
 }
