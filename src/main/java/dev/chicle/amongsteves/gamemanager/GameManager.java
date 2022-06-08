@@ -1,9 +1,12 @@
 package dev.chicle.amongsteves.gamemanager;
 
+import dev.chicle.amongsteves.AmongSteves;
 import dev.chicle.amongsteves.gamemanager.player.ASPlayer;
 import dev.chicle.amongsteves.event.GameStateChangeEvent;
 import dev.chicle.amongsteves.gamemanager.player.PlayerRole;
 import lombok.Getter;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -16,7 +19,7 @@ import java.util.Random;
 import static org.bukkit.Bukkit.getLogger;
 
 public class GameManager {
-    private Plugin plugin;
+    private static Plugin plugin;
     static World world = Bukkit.getServer().getWorlds().get(0);
 
     @Getter
@@ -24,8 +27,10 @@ public class GameManager {
     private static List<ASPlayer> players = new ArrayList<>();
 
     // Ajustes del juego
-    @Getter private static int minPlayers;
-    @Getter private static int maxImpostors;
+    @Getter
+    private static int minPlayers;
+    @Getter
+    private static int maxImpostors;
 
     public GameManager(Plugin plugin) {
         this.plugin = plugin;
@@ -69,9 +74,6 @@ public class GameManager {
 
         world.setDifficulty(Difficulty.PEACEFUL);
 
-        String impostorTitle = ChatColor.RED + PlayerRole.IMPOSTOR.name();
-        String impostorSubtitle = "Acaba con todos los tripulantes";
-
         List<ASPlayer> impostors = new ArrayList<>();
 
         Random random = new Random();
@@ -81,21 +83,42 @@ public class GameManager {
             if (impostors.contains(impostor)) continue;
             impostors.add(impostor);
             impostor.setRole(PlayerRole.IMPOSTOR);
-            impostor.getPlayer().sendTitle(impostorTitle, impostorSubtitle, 10, 20, 10);
         }
 
+        String impostorTitle = ChatColor.RED + PlayerRole.IMPOSTOR.name();
+        String impostorSubtitle = "Acaba con todos los tripulantes";
+
         String crewmateTitle = ChatColor.AQUA + PlayerRole.CREWMATE.name();
-        String crewmateSubtitle = "Hay " + ChatColor.RED + impostors.size() + (impostors.size() > 1 ? " impostores " : " impostor ") + ChatColor.WHITE + "entre nosotros";
+        String crewmateSubtitle = "Hay " + ChatColor.RED + impostors.size() + (impostors.size() > 1 ? " impostores " : " impostor ") + ChatColor.GOLD + "entre nosotros";
 
-        for (ASPlayer player : GameManager.getPlayers()) {
-            if (player.getRole() == PlayerRole.NONE) {
-                player.setRole(PlayerRole.CREWMATE);
-                player.getPlayer().sendTitle(crewmateTitle, crewmateSubtitle, 10, 20, 10);
+        for (ASPlayer asPlayer : GameManager.getPlayers()) {
+            Player player = asPlayer.getPlayer();
+
+            if (!impostors.contains(asPlayer)) asPlayer.setRole(PlayerRole.CREWMATE);
+
+            player.setGameMode(GameMode.ADVENTURE);
+
+            player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(2.0);
+            player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+
+            player.getInventory().clear();
+
+            player.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.0f);
+
+            switch (asPlayer.getRole()) {
+                case CREWMATE:
+                    player.sendTitle(crewmateTitle, null, 20, 70, 10);
+                    player.sendMessage(AmongSteves.chatPrefix + "Eres " + ChatColor.AQUA + "tripulante" + ChatColor.WHITE + ".");
+                    player.sendMessage(AmongSteves.chatPrefix + ChatColor.GOLD + crewmateSubtitle);
+                    break;
+                case IMPOSTOR:
+                    player.sendTitle(impostorTitle, null, 20, 70, 10);
+                    player.sendMessage(AmongSteves.chatPrefix + "Eres " + ChatColor.RED + "impostor" + ChatColor.WHITE + ".");
+                    player.sendMessage(AmongSteves.chatPrefix + ChatColor.GOLD + impostorSubtitle);
+
+                    //player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("XD"));
+                    break;
             }
-            player.getPlayer().setGameMode(GameMode.ADVENTURE);
-
-            player.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(2.0);
-            player.getPlayer().setHealth(player.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
         }
     }
 }
