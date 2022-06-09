@@ -20,6 +20,8 @@ public class SetupListener {
         plugin.getServer().getPluginManager().registerEvents(new PlayerDropItemListener(), plugin);
         // PlayerInventoryInteractListener
         plugin.getServer().getPluginManager().registerEvents(new InventoryClickListener(), plugin);
+        // PlayerSendMessageListener
+        plugin.getServer().getPluginManager().registerEvents(new PlayerSendMessageListener(), plugin);
     }
 
 }
