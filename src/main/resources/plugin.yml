@@ -9,6 +9,9 @@ commands:
   change:
     description: Cambia el estado
     usage: /change <state>
+  changecolor:
+    description: Cambia tu color
+    usage: /changecolor
   startgame:
     description: Inicia la partida
     usage: /startgame

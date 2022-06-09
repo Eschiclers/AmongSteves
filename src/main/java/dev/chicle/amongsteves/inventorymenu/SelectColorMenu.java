@@ -14,7 +14,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 public class SelectColorMenu {
@@ -23,7 +22,7 @@ public class SelectColorMenu {
     String[] guiSetup = {
             "ABCDEFGHI",
             "JKL      ",
-            "         "
+            "        Z"
     };
 
 
@@ -49,6 +48,17 @@ public class SelectColorMenu {
                     ChatColor.RESET + "Elegir color: " + color.name()
             ));
         }
+
+        gui.addElement(new StaticGuiElement('Z',
+                new ItemStack(Material.BARRIER),
+                1,
+                click -> {
+                    gui.close();
+                    return true;
+                },
+                ChatColor.RESET + "Cerrar menu"
+        ));
+
         gui.show(player);
     }
 
