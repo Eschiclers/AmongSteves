@@ -20,11 +20,7 @@ public class PlayerSendMessageListener implements Listener {
 
         ASPlayer asPlayer = GameManager.getPlayer(ev.getPlayer());
 
-        int R = asPlayer.getColor().getColor().getRed(), G = asPlayer.getColor().getColor().getGreen(), B = asPlayer.getColor().getColor().getBlue();
-        String hex = String.format("#%02x%02x%02x", R, G, B);
-
-        ChatColor playerColor = ChatColor.of(hex);
-        String message = "[" + playerColor + asPlayer.getColor().name() + ChatColor.RESET + "] " + ev.getPlayer().getDisplayName() + ": " + ev.getMessage();
+        String message = "[" + asPlayer.getColor().getChatColor() + asPlayer.getColor().name() + ChatColor.RESET + "] " + ev.getPlayer().getDisplayName() + ": " + ev.getMessage();
 
         System.out.printf("El jugador %s ha intentado enviar el mensaje: %s%n",
                 ev.getPlayer().getDisplayName(),
