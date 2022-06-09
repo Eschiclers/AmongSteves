@@ -30,8 +30,6 @@ public class GameStateItems {
                 break;
             case IN_GAME:
                 break;
-            default:
-                throw new UnsupportedOperationException("Unknown game state: " + state);
         }
     }
 

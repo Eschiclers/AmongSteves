@@ -33,8 +33,6 @@ public class GameStateChangeListener implements Listener {
                             ChatColor.RESET + "La partida ha finalizado!");
                     break;
                 }
-                default:
-                    throw new UnsupportedOperationException("Unknown game state: " + ev.getNewGameState());
             }
 
 
