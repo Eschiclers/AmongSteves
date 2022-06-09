@@ -1,11 +1,6 @@
 package dev.chicle.amongsteves.gamemanager.listener;
 
-import dev.chicle.amongsteves.AmongSteves;
 import dev.chicle.amongsteves.event.PlayerChangeColorEvent;
-import dev.chicle.amongsteves.gamemanager.GameManager;
-import dev.chicle.amongsteves.gamemanager.GameState;
-import dev.chicle.amongsteves.gamemanager.player.ASPlayer;
-import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 

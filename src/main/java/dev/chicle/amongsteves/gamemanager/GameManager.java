@@ -10,6 +10,8 @@ import lombok.Getter;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
@@ -146,11 +148,52 @@ public class GameManager {
             }
         }
 
-        // Ha superado todos los checks
+        if(createAndEquipColoredArmor(player, newColor)) {
+            player.sendMessage(AmongSteves.chatPrefix + ChatColor.GREEN + "Color cambiado correctamente.");
+            asPlayer.setColor(newColor);
+            Bukkit.getPluginManager().callEvent(new PlayerChangeColorEvent(player, oldColor, newColor ));
+        } else {
+            player.sendMessage(AmongSteves.chatPrefix + ChatColor.RED + "No se ha podido cambiar el color.");
+        }
+    }
 
-        asPlayer.setColor(newColor);
-        player.sendMessage(ChatColor.GREEN + "Has seleccionado el color " + newColor.name());
+    private static boolean createAndEquipColoredArmor(Player player, PlayerColor color) {
 
-        Bukkit.getPluginManager().callEvent(new PlayerChangeColorEvent(player, oldColor, newColor ));
+        try {
+            ItemStack[] armor = new ItemStack[4];
+
+            armor[3] = new ItemStack(Material.LEATHER_HELMET);
+            armor[2] = new ItemStack(Material.LEATHER_CHESTPLATE);
+            armor[1] = new ItemStack(Material.LEATHER_LEGGINGS);
+            armor[0] = new ItemStack(Material.LEATHER_BOOTS);
+
+            LeatherArmorMeta meta = (LeatherArmorMeta) armor[0].getItemMeta();
+            meta.setColor(color.getColor());
+            meta.setDisplayName(color.name());
+            armor[3].setItemMeta(meta);
+
+            meta = (LeatherArmorMeta) armor[1].getItemMeta();
+            meta.setColor(color.getColor());
+            meta.setDisplayName(color.name());
+            armor[2].setItemMeta(meta);
+
+            meta = (LeatherArmorMeta) armor[2].getItemMeta();
+            meta.setColor(color.getColor());
+            meta.setDisplayName(color.name());
+            armor[1].setItemMeta(meta);
+
+            meta = (LeatherArmorMeta) armor[3].getItemMeta();
+            meta.setColor(color.getColor());
+            meta.setDisplayName(color.name());
+            armor[0].setItemMeta(meta);
+
+            // Equipo armor
+            player.getInventory().setArmorContents(armor);
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
