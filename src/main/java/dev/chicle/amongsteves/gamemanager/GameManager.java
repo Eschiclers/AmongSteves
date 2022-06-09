@@ -117,7 +117,7 @@ public class GameManager {
                     player.sendTitle(impostorTitle, null, 20, 70, 10);
                     player.sendMessage(AmongSteves.chatPrefix + "Eres " + ChatColor.RED + "impostor" + ChatColor.WHITE + ".");
                     player.sendMessage(AmongSteves.chatPrefix + ChatColor.GOLD + impostorSubtitle);
-
+                    asPlayer.setShowActionBar(true);
                     //player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("XD"));
                     break;
             }

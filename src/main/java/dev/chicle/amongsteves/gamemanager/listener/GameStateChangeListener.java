@@ -8,6 +8,7 @@ import dev.chicle.amongsteves.gamemanager.GameState;
 import dev.chicle.amongsteves.gamemanager.GameStateItems;
 import dev.chicle.amongsteves.gamemanager.player.ASPlayer;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,6 +23,7 @@ public class GameStateChangeListener implements Listener {
             GameStateItems.giveItems(player, ev.getNewGameState());
             GameManager.createAndEquipColoredArmor(player, asPlayer.getColor());
 
+            player.setGameMode(GameMode.ADVENTURE);
             switch (ev.getNewGameState()) {
                 case IN_GAME:
                     player.teleport(Locations.getStart());
