@@ -41,7 +41,7 @@ public class SelectColorMenu {
                     getChestPlateColor(color),
                     1,
                     click -> {
-                        Bukkit.getPluginManager().callEvent(new PlayerChangeColorEvent(player, asPlayer.getColor(), color ));
+                        GameManager.changePlayerColor(asPlayer, asPlayer.getColor(), color);
                         gui.close();
                         return true;
                     },

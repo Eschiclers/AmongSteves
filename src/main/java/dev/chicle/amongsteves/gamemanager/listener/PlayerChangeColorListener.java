@@ -16,31 +16,6 @@ public class PlayerChangeColorListener implements Listener {
                 ev.getPlayer().getDisplayName(),
                 ev.getOldColor().name(),
                 ev.getNewColor().name());
-
-        ASPlayer asPlayer = GameManager.getPlayer(ev.getPlayer());
-
-        if(GameManager.getState() != GameState.IN_LOBBY) {
-            ev.getPlayer().sendMessage(AmongSteves.chatPrefix + ChatColor.RED + "No puedes cambiar de color mientras estas en una partida.");
-            return;
-        }
-
-        if(ev.getOldColor() == ev.getNewColor()) {
-            ev.getPlayer().sendMessage(AmongSteves.chatPrefix + ChatColor.RED + "Ya eres ese color.");
-            return;
-        }
-
-        // Check if any player has the same color
-        for(ASPlayer p : GameManager.getPlayers()) {
-            if(p.getColor() == ev.getNewColor()) {
-                ev.getPlayer().sendMessage(AmongSteves.chatPrefix + ChatColor.RED + "Ya hay un jugador con ese color.");
-                return;
-            }
-        }
-
-        // Ha superado todos los checks
-
-        asPlayer.setColor(ev.getNewColor());
-        asPlayer.getPlayer().sendMessage(ChatColor.GREEN + "Has seleccionado el color " + ev.getNewColor().name());
     }
 
 }

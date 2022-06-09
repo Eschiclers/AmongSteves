@@ -1,12 +1,12 @@
 package dev.chicle.amongsteves.gamemanager;
 
 import dev.chicle.amongsteves.AmongSteves;
+import dev.chicle.amongsteves.event.PlayerChangeColorEvent;
 import dev.chicle.amongsteves.gamemanager.player.ASPlayer;
 import dev.chicle.amongsteves.event.GameStateChangeEvent;
+import dev.chicle.amongsteves.gamemanager.player.PlayerColor;
 import dev.chicle.amongsteves.gamemanager.player.PlayerRole;
 import lombok.Getter;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -122,5 +122,35 @@ public class GameManager {
                     break;
             }
         }
+    }
+
+    public static void changePlayerColor(ASPlayer asPlayer, PlayerColor oldColor, PlayerColor newColor) {
+        Player player = asPlayer.getPlayer();
+        //player.getPlayer().setPlayerListName(color + player.getPlayer().getName());
+
+        if(getState() != GameState.IN_LOBBY) {
+            player.sendMessage(AmongSteves.chatPrefix + ChatColor.RED + "No puedes cambiar de color mientras estas en una partida.");
+            return;
+        }
+
+        if(oldColor == newColor) {
+            player.sendMessage(AmongSteves.chatPrefix + ChatColor.RED + "Ya eres ese color.");
+            return;
+        }
+
+        // Check if any player has the same color
+        for(ASPlayer p : getPlayers()) {
+            if(p.getColor() == newColor) {
+                player.sendMessage(AmongSteves.chatPrefix + ChatColor.RED + "Ya hay un jugador con ese color.");
+                return;
+            }
+        }
+
+        // Ha superado todos los checks
+
+        asPlayer.setColor(newColor);
+        player.sendMessage(ChatColor.GREEN + "Has seleccionado el color " + newColor.name());
+
+        Bukkit.getPluginManager().callEvent(new PlayerChangeColorEvent(player, oldColor, newColor ));
     }
 }

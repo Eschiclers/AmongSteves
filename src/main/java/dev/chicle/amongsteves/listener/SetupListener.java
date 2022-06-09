@@ -18,6 +18,8 @@ public class SetupListener {
         plugin.getServer().getPluginManager().registerEvents(new PlayerChangeColorListener(), plugin);
         // PlayerDropItemEvent
         plugin.getServer().getPluginManager().registerEvents(new PlayerDropItemListener(), plugin);
+        // PlayerInventoryInteractListener
+        plugin.getServer().getPluginManager().registerEvents(new InventoryClickListener(), plugin);
     }
 
 }
