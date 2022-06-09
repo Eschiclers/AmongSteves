@@ -105,8 +105,6 @@ public class GameManager {
             player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(2.0);
             player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
 
-            player.getInventory().clear();
-
             player.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.0f);
 
             switch (asPlayer.getRole()) {

@@ -1,24 +1,20 @@
 package dev.chicle.amongsteves.gamemanager.listener;
 
 import dev.chicle.amongsteves.AmongSteves;
-import dev.chicle.amongsteves.config.Locations;
 import dev.chicle.amongsteves.gamemanager.GameManager;
-import dev.chicle.amongsteves.gamemanager.GameState;
+import dev.chicle.amongsteves.gamemanager.GameStateItems;
 import dev.chicle.amongsteves.gamemanager.player.ASPlayer;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Collections;
 
 public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent ev) {
+        ev.setJoinMessage(null);
+
         Player p = ev.getPlayer();
         ASPlayer asPlayer = new ASPlayer(p, false);
         GameManager.addPlayer(asPlayer);
@@ -27,22 +23,8 @@ public class PlayerJoinListener implements Listener {
                 ChatColor.RESET + "Bienvenido! Actualmente la partida se encuentra " +
                 ChatColor.ITALIC + GameManager.getState().getLabel() + ChatColor.RESET + ".");
 
-        if (GameManager.getState() == GameState.IN_LOBBY) {
-            p.getInventory().clear();
+        GameManager.createAndEquipColoredArmor(p, asPlayer.getColor());
 
-            ItemStack bookMenu = new ItemStack(Material.BOOK, 1);
-            ItemMeta meta = bookMenu.getItemMeta();
-
-            meta.setDisplayName(ChatColor.RESET + "" + ChatColor.GOLD + "Abrir menu");
-            meta.setLore(Collections.singletonList(ChatColor.RESET + "" + ChatColor.GRAY + "Tambien puedes usar /menu"));
-
-            bookMenu.setItemMeta(meta);
-
-            p.getInventory().setItem(4, bookMenu);
-
-            GameManager.createAndEquipColoredArmor(p, asPlayer.getColor());
-
-            p.teleport(Locations.getLobby());
-        }
+        GameStateItems.giveItems(p, GameManager.getState());
     }
 }
