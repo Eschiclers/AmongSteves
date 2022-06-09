@@ -66,7 +66,9 @@ public class GameManager {
                 return p;
             }
         }
-        return null;
+        ASPlayer newPlayer = new ASPlayer(player, false);
+        addPlayer(newPlayer);
+        return newPlayer;
     }
 
     public static void startGame() {
