@@ -1,6 +1,8 @@
 package dev.chicle.amongsteves.gamemanager.player;
 
+import dev.chicle.amongsteves.config.Locations;
 import dev.chicle.amongsteves.gamemanager.GameManager;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 
@@ -24,6 +26,10 @@ public class ASPlayer {
         }
         this.actionCooldown = false;
         this.actionBar = new ASProgressBar(100.0f);
+
+        switch (GameManager.getState()){
+            case IN_LOBBY -> player.teleport(Locations.getLobby());
+        }
     }
 
     public Player getPlayer() {
