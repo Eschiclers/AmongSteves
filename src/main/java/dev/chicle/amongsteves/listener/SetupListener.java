@@ -16,6 +16,8 @@ public class SetupListener {
         plugin.getServer().getPluginManager().registerEvents(new GameStateChangeListener(), plugin);
         // PlayerChangeColorEvent
         plugin.getServer().getPluginManager().registerEvents(new PlayerChangeColorListener(), plugin);
+        // PlayerDropItemEvent
+        plugin.getServer().getPluginManager().registerEvents(new PlayerDropItemListener(), plugin);
     }
 
 }
