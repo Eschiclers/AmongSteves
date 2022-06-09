@@ -1,10 +1,7 @@
 package dev.chicle.amongsteves.listener;
 
 import dev.chicle.amongsteves.AmongSteves;
-import dev.chicle.amongsteves.gamemanager.listener.GameStateChangeListener;
-import dev.chicle.amongsteves.gamemanager.listener.PlayerClickListener;
-import dev.chicle.amongsteves.gamemanager.listener.PlayerDisconnectListener;
-import dev.chicle.amongsteves.gamemanager.listener.PlayerJoinListener;
+import dev.chicle.amongsteves.gamemanager.listener.*;
 
 public class SetupListener {
 
@@ -17,6 +14,8 @@ public class SetupListener {
         plugin.getServer().getPluginManager().registerEvents(new PlayerClickListener(), plugin);
         // GameStateChangeEvent
         plugin.getServer().getPluginManager().registerEvents(new GameStateChangeListener(), plugin);
+        // PlayerChangeColorEvent
+        plugin.getServer().getPluginManager().registerEvents(new PlayerChangeColorListener(), plugin);
     }
 
 }

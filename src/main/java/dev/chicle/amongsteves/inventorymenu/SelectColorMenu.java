@@ -4,6 +4,8 @@ import de.themoep.inventorygui.GuiStateElement;
 import de.themoep.inventorygui.InventoryGui;
 import de.themoep.inventorygui.StaticGuiElement;
 import dev.chicle.amongsteves.AmongSteves;
+import dev.chicle.amongsteves.event.GameStateChangeEvent;
+import dev.chicle.amongsteves.event.PlayerChangeColorEvent;
 import dev.chicle.amongsteves.gamemanager.GameManager;
 import dev.chicle.amongsteves.gamemanager.player.ASPlayer;
 import dev.chicle.amongsteves.gamemanager.player.PlayerColor;
@@ -35,14 +37,12 @@ public class SelectColorMenu {
         // Iterate PlayerColor enum
         for (PlayerColor color : PlayerColor.values()) {
             int index = color.ordinal() + 65;
-            player.sendMessage((char)index + ": " + color.name());
 
             gui.addElement(new StaticGuiElement((char)index,
                     getChestPlateColor(color),
-                    1, // Display a number as the item count
+                    1,
                     click -> {
-                        asPlayer.setColor(color);
-                        asPlayer.getPlayer().sendMessage(ChatColor.GREEN + "Has seleccionado el color " + color.toString());
+                        Bukkit.getPluginManager().callEvent(new PlayerChangeColorEvent(player, asPlayer.getColor(), color ));
                         gui.close();
                         return true;
                     },
