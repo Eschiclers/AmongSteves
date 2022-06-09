@@ -23,8 +23,7 @@ public class PlayerJoinListener implements Listener {
                 ChatColor.RESET + "Bienvenido! Actualmente la partida se encuentra " +
                 ChatColor.ITALIC + GameManager.getState().getLabel() + ChatColor.RESET + ".");
 
-        GameManager.createAndEquipColoredArmor(p, asPlayer.getColor());
-
         GameStateItems.giveItems(p, GameManager.getState());
+        GameManager.createAndEquipColoredArmor(p, asPlayer.getColor());
     }
 }
