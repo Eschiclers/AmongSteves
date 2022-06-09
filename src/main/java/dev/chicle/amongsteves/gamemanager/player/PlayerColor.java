@@ -1,5 +1,6 @@
 package dev.chicle.amongsteves.gamemanager.player;
 
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 
 public enum PlayerColor {
@@ -121,5 +122,11 @@ public enum PlayerColor {
 
     public Color getColor() {
         return color;
+    }
+
+    public ChatColor getChatColor(){
+        int R = getColor().getRed(), G = getColor().getGreen(), B = getColor().getBlue();
+        String hex = String.format("#%02x%02x%02x", R, G, B);
+        return ChatColor.of(hex);
     }
 }
