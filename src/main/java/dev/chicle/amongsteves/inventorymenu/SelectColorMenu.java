@@ -37,6 +37,8 @@ public class SelectColorMenu {
         for (PlayerColor color : PlayerColor.values()) {
             int index = color.ordinal() + 65;
 
+            if(!GameManager.isColorAvailable(color)) continue;
+
             gui.addElement(new StaticGuiElement((char)index,
                     getChestPlateColor(color),
                     1,
