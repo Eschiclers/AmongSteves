@@ -2,6 +2,7 @@ package dev.chicle.amongsteves.gamemanager.player;
 
 import dev.chicle.amongsteves.config.Locations;
 import dev.chicle.amongsteves.gamemanager.GameManager;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
@@ -26,7 +27,7 @@ public class ASPlayer {
         }
         this.actionCooldown = false;
         this.actionBar = new ASProgressBar(100.0f);
-
+        updatePlayerDisplayName();
         switch (GameManager.getState()){
             case IN_LOBBY -> player.teleport(Locations.getLobby());
         }
@@ -46,6 +47,7 @@ public class ASPlayer {
 
     public void setColor(PlayerColor color) {
         this.color = color;
+        updatePlayerDisplayName();
     }
 
     public void setRole(PlayerRole role) {
@@ -78,5 +80,11 @@ public class ASPlayer {
 
     public void setActionBar(ASProgressBar actionBar) {
         this.actionBar = actionBar;
+    }
+
+    private void updatePlayerDisplayName(){
+        String newDisplayName = ChatColor.RESET + "[" + this.color.getChatColor() + this.color.name() + ChatColor.RESET + "] " + this.player.getName();
+        this.player.setDisplayName(newDisplayName);
+        this.player.setPlayerListName(newDisplayName);
     }
 }

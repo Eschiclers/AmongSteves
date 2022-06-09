@@ -2,8 +2,6 @@ package dev.chicle.amongsteves.gamemanager.listener;
 
 import dev.chicle.amongsteves.gamemanager.GameManager;
 import dev.chicle.amongsteves.gamemanager.GameState;
-import dev.chicle.amongsteves.gamemanager.player.ASPlayer;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,9 +16,7 @@ public class PlayerSendMessageListener implements Listener {
             return;
         }
 
-        ASPlayer asPlayer = GameManager.getPlayer(ev.getPlayer());
-
-        String message = "[" + asPlayer.getColor().getChatColor() + asPlayer.getColor().name() + ChatColor.RESET + "] " + ev.getPlayer().getDisplayName() + ": " + ev.getMessage();
+        String message = ev.getPlayer().getDisplayName() + ": " + ev.getMessage();
 
         System.out.printf("El jugador %s ha intentado enviar el mensaje: %s%n",
                 ev.getPlayer().getDisplayName(),
