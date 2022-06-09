@@ -22,6 +22,8 @@ public class SetupListener {
         plugin.getServer().getPluginManager().registerEvents(new InventoryClickListener(), plugin);
         // PlayerSendMessageListener
         plugin.getServer().getPluginManager().registerEvents(new PlayerSendMessageListener(), plugin);
+        // EntityDamageByEntityListener
+        plugin.getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(), plugin);
     }
 
 }
