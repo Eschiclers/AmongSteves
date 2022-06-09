@@ -20,7 +20,8 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent ev) {
         Player p = ev.getPlayer();
-        GameManager.addPlayer(new ASPlayer(p, false));
+        ASPlayer asPlayer = new ASPlayer(p, false);
+        GameManager.addPlayer(asPlayer);
 
         p.sendMessage(AmongSteves.chatPrefix +
                 ChatColor.RESET + "Bienvenido! Actualmente la partida se encuentra " +
@@ -38,6 +39,8 @@ public class PlayerJoinListener implements Listener {
             bookMenu.setItemMeta(meta);
 
             p.getInventory().setItem(4, bookMenu);
+
+            GameManager.createAndEquipColoredArmor(p, asPlayer.getColor());
 
             p.teleport(Locations.getLobby());
         }

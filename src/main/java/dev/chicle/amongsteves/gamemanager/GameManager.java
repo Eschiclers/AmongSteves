@@ -141,11 +141,9 @@ public class GameManager {
         }
 
         // Check if any player has the same color
-        for(ASPlayer p : getPlayers()) {
-            if(p.getColor() == newColor) {
-                player.sendMessage(AmongSteves.chatPrefix + ChatColor.RED + "Ya hay un jugador con ese color.");
-                return;
-            }
+        if(!isColorAvailable(newColor)) {
+            player.sendMessage(AmongSteves.chatPrefix + ChatColor.RED + "Ya hay un jugador con ese color.");
+            return;
         }
 
         if(createAndEquipColoredArmor(player, newColor)) {
@@ -157,7 +155,16 @@ public class GameManager {
         }
     }
 
-    private static boolean createAndEquipColoredArmor(Player player, PlayerColor color) {
+    public static boolean isColorAvailable(PlayerColor color) {
+        for(ASPlayer p : getPlayers()) {
+            if(p.getColor() == color) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean createAndEquipColoredArmor(Player player, PlayerColor color) {
 
         try {
             ItemStack[] armor = new ItemStack[4];

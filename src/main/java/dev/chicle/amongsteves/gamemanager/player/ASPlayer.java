@@ -1,5 +1,6 @@
 package dev.chicle.amongsteves.gamemanager.player;
 
+import dev.chicle.amongsteves.gamemanager.GameManager;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 
@@ -15,8 +16,12 @@ public class ASPlayer {
         this.player = player;
         this.isDead = isDead;
         this.role = PlayerRole.NONE;
-        // Color aleatorio sacado de los enums
-        this.color = PlayerColor.values()[(int) (Math.random() * PlayerColor.values().length)];
+        while(true){
+            this.color = PlayerColor.values()[(int) (Math.random() * PlayerColor.values().length)];
+            if(GameManager.isColorAvailable(this.color)){
+                break;
+            }
+        }
         this.actionCooldown = false;
         this.actionBar = new ASProgressBar(100.0f);
     }
