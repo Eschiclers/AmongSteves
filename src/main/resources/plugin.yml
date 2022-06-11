@@ -9,12 +9,17 @@ commands:
   change:
     description: Cambia el estado
     usage: /change <state>
-  changecolor:
-    description: Cambia tu color
-    usage: /changecolor
   startgame:
     description: Inicia la partida
-    usage: /startgame
+    usage: /forcestart
+    aliases:
+      - forcestart
+      - forzarinicio
+      - forzarstart
   endgame:
     description: Finaliza la partida
-    usage: /endgame
+    usage: /forceend
+    aliases:
+      - forceend
+      - forzarend
+      - forzafinal

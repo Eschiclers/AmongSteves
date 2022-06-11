@@ -7,6 +7,5 @@ public class SetupCommand {
         plugin.getCommand("change").setExecutor(new ChangeStateCommand());
         plugin.getCommand("startgame").setExecutor(new StartGameCommand());
         plugin.getCommand("endgame").setExecutor(new EndGameCommand());
-        plugin.getCommand("changecolor").setExecutor(new ChangeColorCommand());
     }
 }
