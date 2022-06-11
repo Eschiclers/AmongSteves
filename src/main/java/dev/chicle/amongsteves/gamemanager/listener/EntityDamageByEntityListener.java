@@ -21,8 +21,11 @@ public class EntityDamageByEntityListener implements Listener {
         ASPlayer asTarget = GameManager.getPlayer(target);
 
         if((asPlayer.getRole() == PlayerRole.IMPOSTOR && asTarget.getRole() != PlayerRole.IMPOSTOR) && !asPlayer.isActionCooldown()){
+
             asPlayer.resetActionCooldown();
-            target.kickPlayer("Has sido asesinado por un impostor!");
+            asTarget.setDead(true);
+
+            GameManager.checkWinner();
         }
 
     }

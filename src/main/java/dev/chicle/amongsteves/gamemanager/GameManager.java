@@ -8,6 +8,8 @@ import dev.chicle.amongsteves.gamemanager.player.PlayerColor;
 import dev.chicle.amongsteves.gamemanager.player.PlayerRole;
 import lombok.Getter;
 import lombok.Setter;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -33,7 +35,8 @@ public class GameManager {
     private static int minPlayers;
     @Getter
     private static int maxImpostors;
-    @Getter @Setter
+    @Getter
+    @Setter
     private static float actionCooldownTime = 45.0f;
 
     public GameManager(Plugin plugin) {
@@ -121,38 +124,65 @@ public class GameManager {
         }
     }
 
+    public static void checkWinner() {
+        int crewmates = 0;
+        int impostors = 0;
+
+        for (ASPlayer asPlayer : GameManager.getPlayers()) {
+            if (asPlayer.getRole() == PlayerRole.IMPOSTOR && !asPlayer.isDead()) impostors++;
+            else if (asPlayer.getRole() != PlayerRole.IMPOSTOR && !asPlayer.isDead()) crewmates++;
+        }
+
+        if (crewmates == 0) {
+            GameManager.setState(GameState.IN_LOBBY);
+            for (ASPlayer asPlayer : GameManager.getPlayers()) {
+                asPlayer.getPlayer().sendMessage(AmongSteves.chatPrefix + ChatColor.RED + "No hay mas tripulantes!");
+                asPlayer.getPlayer().sendMessage(AmongSteves.chatPrefix + ChatColor.RED + "Los impostores ganan!");
+                asPlayer.getPlayer().sendTitle(ChatColor.RED + "Los impostores ganan!", null, 20, 70, 10);
+            }
+        } else if (impostors == 0) {
+            GameManager.setState(GameState.IN_LOBBY);
+            for (ASPlayer asPlayer : GameManager.getPlayers()) {
+                asPlayer.getPlayer().sendMessage(AmongSteves.chatPrefix + ChatColor.GREEN + "Todos los impostores han sido eliminados!");
+                asPlayer.getPlayer().sendMessage(AmongSteves.chatPrefix + ChatColor.GREEN + "Los tripulantes ganan!");
+                asPlayer.getPlayer().sendTitle(ChatColor.GREEN + "Los tripulantes ganan!", null, 20, 70, 10);
+            }
+        }
+
+    }
+
     public static void changePlayerColor(ASPlayer asPlayer, PlayerColor oldColor, PlayerColor newColor) {
         Player player = asPlayer.getPlayer();
         //player.getPlayer().setPlayerListName(color + player.getPlayer().getName());
 
-        if(getState() != GameState.IN_LOBBY) {
+        if (getState() != GameState.IN_LOBBY) {
             player.sendMessage(AmongSteves.chatPrefix + ChatColor.RED + "No puedes cambiar de color mientras estas en una partida.");
             return;
         }
 
-        if(oldColor == newColor) {
+        if (oldColor == newColor) {
             player.sendMessage(AmongSteves.chatPrefix + ChatColor.RED + "Ya eres ese color.");
             return;
         }
 
         // Check if any player has the same color
-        if(!isColorAvailable(newColor)) {
+        if (!isColorAvailable(newColor)) {
             player.sendMessage(AmongSteves.chatPrefix + ChatColor.RED + "Ya hay un jugador con ese color.");
             return;
         }
 
-        if(createAndEquipColoredArmor(player, newColor)) {
+        if (createAndEquipColoredArmor(player, newColor)) {
             player.sendMessage(AmongSteves.chatPrefix + ChatColor.GREEN + "Color cambiado correctamente.");
             asPlayer.setColor(newColor);
-            Bukkit.getPluginManager().callEvent(new PlayerChangeColorEvent(player, oldColor, newColor ));
+            Bukkit.getPluginManager().callEvent(new PlayerChangeColorEvent(player, oldColor, newColor));
         } else {
             player.sendMessage(AmongSteves.chatPrefix + ChatColor.RED + "No se ha podido cambiar el color.");
         }
     }
 
     public static boolean isColorAvailable(PlayerColor color) {
-        for(ASPlayer p : getPlayers()) {
-            if(p.getColor() == color) {
+        for (ASPlayer p : getPlayers()) {
+            if (p.getColor() == color) {
                 return false;
             }
         }
