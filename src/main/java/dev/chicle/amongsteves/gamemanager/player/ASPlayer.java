@@ -42,7 +42,7 @@ public class ASPlayer {
             }
         }
         this.actionCooldown = true;
-        this.actionBar = new ASProgressBar(100.0f);
+        this.actionBar = new ASProgressBar(0.0f, 20);
         this.showActionBar = false;
         updatePlayerDisplayName();
         switch (GameManager.getState()) {
@@ -114,9 +114,9 @@ public class ASPlayer {
 
     private void handleActionThread(){
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                getActionBar().getProgress() == 100.0f ?
-                        TextComponent.fromLegacyText(ChatColor.GREEN + "Ya puedes asesinar a un jugador") :
-                        TextComponent.fromLegacyText("Ataque en cooldown " + actionBar.getProgressBar() + " " + actionBar.getProgressPercentage() + "%"));
+                actionCooldown ?
+                        TextComponent.fromLegacyText("Ataque en cooldown " + actionBar.getProgressBar() + " " + actionBar.getProgressPercentage() + "%") :
+                        TextComponent.fromLegacyText(ChatColor.GREEN + "Ya puedes asesinar a un jugador"));
     }
 
     public void resetActionCooldown(){
