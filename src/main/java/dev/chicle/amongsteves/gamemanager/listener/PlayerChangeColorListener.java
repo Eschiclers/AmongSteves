@@ -8,7 +8,7 @@ public class PlayerChangeColorListener implements Listener {
     @EventHandler
     public void onPlayerChangeColor(PlayerChangeColorEvent ev) {
         System.out.printf("El jugador %s ha intentado cambiar de color %s a color %s%n",
-                ev.getPlayer().getDisplayName(),
+                ev.getPlayer().getName(),
                 ev.getOldColor().name(),
                 ev.getNewColor().name());
     }
