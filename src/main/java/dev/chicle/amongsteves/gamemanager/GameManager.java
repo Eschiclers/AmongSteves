@@ -7,6 +7,7 @@ import dev.chicle.amongsteves.event.GameStateChangeEvent;
 import dev.chicle.amongsteves.gamemanager.player.PlayerColor;
 import dev.chicle.amongsteves.gamemanager.player.PlayerRole;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -32,6 +33,8 @@ public class GameManager {
     private static int minPlayers;
     @Getter
     private static int maxImpostors;
+    @Getter @Setter
+    private static float actionCooldownTime = 45.0f;
 
     public GameManager(Plugin plugin) {
         this.plugin = plugin;

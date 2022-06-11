@@ -26,6 +26,7 @@ public class GameStateChangeListener implements Listener {
                 case IN_GAME:
                     player.teleport(Locations.getStart());
                     player.sendMessage(AmongSteves.chatPrefix + ChatColor.GREEN + "La partida ha empezado!");
+                    asPlayer.resetActionCooldown();
                     break;
                 case IN_LOBBY: {
                     player.teleport(Locations.getLobby());

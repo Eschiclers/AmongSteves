@@ -10,6 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 
 public class ASPlayer {
@@ -19,14 +20,12 @@ public class ASPlayer {
     private boolean actionCooldown;
     private ASProgressBar actionBar;
 
-    private Runnable actionThread = new Runnable() {
-        @Override
-        public void run() {
-            handleActionThread();
-        }
-    };
+    private Runnable actionThread = () -> handleActionThread();
 
     private int scheduledTask;
+
+    private int cooldownTask;
+    private float cooldownTime;
 
     private boolean isDead;
     private boolean showActionBar;
@@ -112,16 +111,28 @@ public class ASPlayer {
         }
     }
 
-    private void handleActionThread(){
+    private void handleActionThread() {
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
                 actionCooldown ?
-                        TextComponent.fromLegacyText("Ataque en cooldown " + actionBar.getProgressBar() + " " + actionBar.getProgressPercentage() + "%") :
-                        TextComponent.fromLegacyText(ChatColor.GREEN + "Ya puedes asesinar a un jugador"));
+                        TextComponent.fromLegacyText("Ataque disponible en (" + (int)cooldownTime + ChatColor.GRAY + "s" + ChatColor.WHITE + ") " + actionBar.getProgressBar() + " " + (int)actionBar.getProgressPercentage() + "%") :
+                        TextComponent.fromLegacyText(ChatColor.GREEN + "Ataque disponible"));
     }
 
-    public void resetActionCooldown(){
+    public void resetActionCooldown() {
         this.setActionCooldown(true);
-        this.getActionBar().setProgress(0.0f);
+        float cooldownMax = GameManager.getActionCooldownTime();
+        this.cooldownTime = GameManager.getActionCooldownTime();
+
+        cooldownTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(AmongSteves.getInstance(), () -> {
+            if (cooldownTime > 0) {
+                cooldownTime--;
+                float progress = (cooldownMax - cooldownTime) * 100 / cooldownMax;
+                actionBar.setProgress(progress);
+            } else {
+                Bukkit.getScheduler().cancelTask(cooldownTask);
+                this.setActionCooldown(false);
+            }
+        }, 0L, 20L);
     }
 
     private void updatePlayerDisplayName() {
@@ -130,7 +141,7 @@ public class ASPlayer {
         this.player.setPlayerListName(newDisplayName);
     }
 
-    public void reset(){
+    public void reset() {
         player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
         player.setFoodLevel(20);
         player.setSaturation(20);
@@ -147,7 +158,7 @@ public class ASPlayer {
         GameManager.createAndEquipColoredArmor(player, getColor());
     }
 
-    public void stopScheduledTask(){
+    public void stopScheduledTask() {
         Bukkit.getScheduler().cancelTask(scheduledTask);
     }
 }
