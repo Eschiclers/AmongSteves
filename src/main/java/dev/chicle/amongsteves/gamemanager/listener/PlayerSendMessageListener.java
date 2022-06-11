@@ -1,5 +1,6 @@
 package dev.chicle.amongsteves.gamemanager.listener;
 
+import dev.chicle.amongsteves.AmongSteves;
 import dev.chicle.amongsteves.gamemanager.GameManager;
 import dev.chicle.amongsteves.gamemanager.GameState;
 import org.bukkit.Bukkit;
@@ -18,10 +19,9 @@ public class PlayerSendMessageListener implements Listener {
 
         String message = ev.getPlayer().getDisplayName() + ": " + ev.getMessage();
 
-        System.out.printf("El jugador %s ha intentado enviar el mensaje: %s%n",
-                ev.getPlayer().getDisplayName(),
-                ev.getMessage());
-
+        AmongSteves.getLog().info(String.format("El jugador %s ha intentado enviar el mensaje: %s",
+                ev.getPlayer().getName(),
+                ev.getMessage()));
 
         Bukkit.broadcastMessage(message);
     }
