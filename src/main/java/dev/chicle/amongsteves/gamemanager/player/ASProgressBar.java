@@ -3,7 +3,7 @@ package dev.chicle.amongsteves.gamemanager.player;
 import org.bukkit.ChatColor;
 
 public class ASProgressBar {
-    private int progressBarLength = 20;
+    private int progressBarLength;
     private final float maxProgress = 100.0f;
     private float progress;
 
