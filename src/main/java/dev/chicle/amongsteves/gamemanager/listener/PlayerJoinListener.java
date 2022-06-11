@@ -6,6 +6,7 @@ import dev.chicle.amongsteves.gamemanager.GameManager;
 import dev.chicle.amongsteves.gamemanager.GameState;
 import dev.chicle.amongsteves.gamemanager.GameStateItems;
 import dev.chicle.amongsteves.gamemanager.player.ASPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -21,6 +22,8 @@ public class PlayerJoinListener implements Listener {
         Player p = ev.getPlayer();
         ASPlayer asPlayer = new ASPlayer(p, false);
         GameManager.addPlayer(asPlayer);
+        // Add player to team
+        Bukkit.getScoreboardManager().getMainScoreboard().getTeam("players").addEntry(p.getName());
 
         p.sendMessage(AmongSteves.chatPrefix +
                 ChatColor.RESET + "Bienvenido! Actualmente la partida se encuentra " +
