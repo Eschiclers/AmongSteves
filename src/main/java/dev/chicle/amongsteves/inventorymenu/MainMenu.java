@@ -18,9 +18,7 @@ public class MainMenu {
     Player player;
     InventoryGui gui;
     String[] guiSetup = {
-            "C        ",
-            "         ",
-            "        Z"
+            "C       Z"
     };
 
 

@@ -21,8 +21,7 @@ public class SelectColorMenu {
     InventoryGui gui;
     String[] guiSetup = {
             "ABCDEFGHI",
-            "JKL      ",
-            "        Z"
+            "JKL     Z"
     };
 
 
