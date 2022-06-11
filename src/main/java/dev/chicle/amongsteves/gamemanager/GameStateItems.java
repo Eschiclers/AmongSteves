@@ -1,6 +1,5 @@
 package dev.chicle.amongsteves.gamemanager;
 
-import dev.chicle.amongsteves.config.Locations;
 import dev.chicle.amongsteves.gamemanager.player.ASPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -14,7 +13,7 @@ public class GameStateItems {
 
     public static void giveItems(Player p, GameState state) {
         ASPlayer asPlayer = GameManager.getPlayer(p);
-        p.getInventory().clear();
+        asPlayer.reset();
 
         switch (state) {
             case IN_LOBBY:

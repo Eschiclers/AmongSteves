@@ -4,7 +4,6 @@ import dev.chicle.amongsteves.command.SetupCommand;
 import dev.chicle.amongsteves.config.SetupConfiguration;
 import dev.chicle.amongsteves.gamemanager.GameManager;
 import dev.chicle.amongsteves.listener.SetupListener;
-import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;

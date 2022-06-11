@@ -8,7 +8,6 @@ import dev.chicle.amongsteves.gamemanager.player.PlayerColor;
 import dev.chicle.amongsteves.gamemanager.player.PlayerRole;
 import lombok.Getter;
 import org.bukkit.*;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -99,11 +98,6 @@ public class GameManager {
             Player player = asPlayer.getPlayer();
 
             if (!impostors.contains(asPlayer)) asPlayer.setRole(PlayerRole.CREWMATE);
-
-            player.setGameMode(GameMode.ADVENTURE);
-
-            player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(2.0);
-            player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
 
             player.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.0f);
 
