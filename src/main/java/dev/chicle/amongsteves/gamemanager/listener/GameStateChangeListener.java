@@ -31,6 +31,11 @@ public class GameStateChangeListener implements Listener {
                     player.teleport(Locations.getLobby());
                     player.sendMessage(AmongSteves.chatPrefix +
                             ChatColor.RESET + "La partida ha finalizado!");
+                    asPlayer.stopScheduledTask();
+                    break;
+                }
+                default: {
+                    asPlayer.stopScheduledTask();
                     break;
                 }
             }

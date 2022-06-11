@@ -146,4 +146,8 @@ public class ASPlayer {
 
         GameManager.createAndEquipColoredArmor(player, getColor());
     }
+
+    public void stopScheduledTask(){
+        Bukkit.getScheduler().cancelTask(scheduledTask);
+    }
 }
