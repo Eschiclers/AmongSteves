@@ -1,6 +1,7 @@
 package dev.chicle.amongsteves.gamemanager;
 
 import dev.chicle.amongsteves.AmongSteves;
+import dev.chicle.amongsteves.config.Locations;
 import dev.chicle.amongsteves.event.PlayerChangeColorEvent;
 import dev.chicle.amongsteves.gamemanager.player.ASPlayer;
 import dev.chicle.amongsteves.event.GameStateChangeEvent;
@@ -13,8 +14,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -77,13 +81,12 @@ public class GameManager {
     }
 
     public static void startGame() {
-        GameManager.setState(GameState.IN_GAME);
-
-        world.setDifficulty(Difficulty.PEACEFUL);
-
+        Collection<? extends Player> players = Bukkit.getOnlinePlayers();
         List<ASPlayer> impostors = new ArrayList<>();
 
         Random random = new Random();
+
+        world.setDifficulty(Difficulty.PEACEFUL);
 
         while (impostors.size() < GameManager.getMaxImpostors()) {
             ASPlayer impostor = GameManager.getPlayers().get(random.nextInt(GameManager.getPlayers().size()));
@@ -101,9 +104,25 @@ public class GameManager {
         for (ASPlayer asPlayer : GameManager.getPlayers()) {
             Player player = asPlayer.getPlayer();
 
+            player.setGameMode(GameMode.ADVENTURE);
+
+            // Ocultar a los jugadores
+            for (Player p2 : players) {
+                player.hidePlayer(AmongSteves.getInstance(), p2);
+            }
+
+            // Si el jugador no está en la lista de impostores, asignarle el rol CREWMATE
             if (!impostors.contains(asPlayer)) asPlayer.setRole(PlayerRole.CREWMATE);
 
-            player.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.0f);
+            // Llevar a la zona oscura y cegar
+            player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1, false, false));
+            player.teleport(Locations.getBlack());
+
+            // Vaciar el inventario
+            player.getInventory().clear();
+
+            // Sonido al empezar el juego
+            //player.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.0f);
 
             switch (asPlayer.getRole()) {
                 case CREWMATE:
@@ -115,10 +134,29 @@ public class GameManager {
                     player.sendTitle(impostorTitle, impostorSubtitle, 20, 70, 10);
                     player.sendMessage(AmongSteves.chatPrefix + "Eres " + ChatColor.RED + "impostor" + ChatColor.WHITE + ".");
                     player.sendMessage(AmongSteves.chatPrefix + ChatColor.GOLD + impostorSubtitle);
-                    asPlayer.setShowActionBar(true);
                     break;
             }
         }
+
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+
+            for(Player p : players){
+                ASPlayer asP = getPlayer(p);
+
+                players.forEach(p2 -> {
+                    p.showPlayer(AmongSteves.getInstance(), p2);
+                });
+
+                p.teleport(Locations.getStart());
+
+                asP.resetActionCooldown();
+                asP.setShowActionBar(asP.getRole() == PlayerRole.IMPOSTOR);
+
+                asP.reset(true);
+            }
+
+            GameManager.setState(GameState.IN_GAME);
+        }, 70L);
     }
 
     public static void checkWinner() {
@@ -150,7 +188,6 @@ public class GameManager {
 
     public static void changePlayerColor(ASPlayer asPlayer, PlayerColor oldColor, PlayerColor newColor) {
         Player player = asPlayer.getPlayer();
-        //player.getPlayer().setPlayerListName(color + player.getPlayer().getName());
 
         if (getState() != GameState.IN_LOBBY) {
             player.sendMessage(AmongSteves.chatPrefix + ChatColor.RED + "No puedes cambiar de color mientras estas en una partida.");

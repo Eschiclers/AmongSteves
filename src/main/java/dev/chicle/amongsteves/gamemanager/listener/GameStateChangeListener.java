@@ -15,7 +15,6 @@ import org.bukkit.event.Listener;
 public class GameStateChangeListener implements Listener {
     @EventHandler
     public void onGameStateChange(GameStateChangeEvent ev) {
-
         for (ASPlayer asPlayer : GameManager.getPlayers()) {
             Player player = asPlayer.getPlayer();
             asPlayer.reset();
@@ -23,16 +22,14 @@ public class GameStateChangeListener implements Listener {
 
             player.setGameMode(GameMode.ADVENTURE);
             switch (ev.getNewGameState()) {
-                case IN_GAME:
-                    player.teleport(Locations.getStart());
-                    player.sendMessage(AmongSteves.chatPrefix + ChatColor.GREEN + "La partida ha empezado!");
-                    asPlayer.resetActionCooldown();
-                    break;
                 case IN_LOBBY: {
                     player.teleport(Locations.getLobby());
                     player.sendMessage(AmongSteves.chatPrefix +
                             ChatColor.RESET + "La partida ha finalizado!");
                     asPlayer.stopScheduledTask();
+                    break;
+                }
+                case IN_GAME:{
                     break;
                 }
                 default: {
@@ -43,7 +40,5 @@ public class GameStateChangeListener implements Listener {
 
 
         }
-
-
     }
 }
