@@ -141,7 +141,11 @@ public class ASPlayer {
         this.player.setPlayerListName(newDisplayName);
     }
 
-    public void reset() {
+    public void reset(){
+        reset(true);
+    }
+
+    public void reset(boolean equip) {
         player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
         player.setFoodLevel(20);
         player.setSaturation(20);
@@ -155,7 +159,8 @@ public class ASPlayer {
         player.setAllowFlight(false);
         player.getActivePotionEffects().forEach(effect -> player.removePotionEffect(effect.getType()));
 
-        GameManager.createAndEquipColoredArmor(player, getColor());
+        if(equip)
+            GameManager.createAndEquipColoredArmor(player, getColor());
     }
 
     public void stopScheduledTask() {
