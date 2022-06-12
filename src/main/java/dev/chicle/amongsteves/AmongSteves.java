@@ -10,6 +10,7 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings("unused")
@@ -46,6 +47,14 @@ public final class AmongSteves extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+
+    public static boolean checkPermissions(Player player, String permission){
+        if(!player.hasPermission(permission)){
+            player.sendMessage(chatPrefix + ChatColor.RED + "No tienes permisos para hacer eso.");
+            return false;
+        }
+        return true;
     }
 
     public static AmongSteves getInstance(){

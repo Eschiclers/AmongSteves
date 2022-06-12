@@ -1,5 +1,6 @@
 package dev.chicle.amongsteves.command;
 
+import dev.chicle.amongsteves.AmongSteves;
 import dev.chicle.amongsteves.gamemanager.GameManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,7 +11,10 @@ public class StartGameCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) return true;
+        if(!AmongSteves.checkPermissions((Player) sender, "amongsteves.commands.startgame")) return true;
+
         GameManager.startGame();
+
         return true;
     }
 }
