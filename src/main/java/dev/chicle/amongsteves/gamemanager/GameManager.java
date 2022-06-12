@@ -8,8 +8,6 @@ import dev.chicle.amongsteves.gamemanager.player.PlayerColor;
 import dev.chicle.amongsteves.gamemanager.player.PlayerRole;
 import lombok.Getter;
 import lombok.Setter;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -109,16 +107,15 @@ public class GameManager {
 
             switch (asPlayer.getRole()) {
                 case CREWMATE:
-                    player.sendTitle(crewmateTitle, null, 20, 70, 10);
+                    player.sendTitle(crewmateTitle, crewmateSubtitle, 20, 70, 10);
                     player.sendMessage(AmongSteves.chatPrefix + "Eres " + ChatColor.AQUA + "tripulante" + ChatColor.WHITE + ".");
                     player.sendMessage(AmongSteves.chatPrefix + ChatColor.GOLD + crewmateSubtitle);
                     break;
                 case IMPOSTOR:
-                    player.sendTitle(impostorTitle, null, 20, 70, 10);
+                    player.sendTitle(impostorTitle, impostorSubtitle, 20, 70, 10);
                     player.sendMessage(AmongSteves.chatPrefix + "Eres " + ChatColor.RED + "impostor" + ChatColor.WHITE + ".");
                     player.sendMessage(AmongSteves.chatPrefix + ChatColor.GOLD + impostorSubtitle);
                     asPlayer.setShowActionBar(true);
-                    //player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("XD"));
                     break;
             }
         }
