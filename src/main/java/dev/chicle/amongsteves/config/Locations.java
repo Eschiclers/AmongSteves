@@ -13,6 +13,15 @@ public class Locations {
         plugin = p;
     }
 
+    public static Location getBlack() {
+        return new Location(world,
+                plugin.getConfig().getDouble("locations.black.coords.x"),
+                plugin.getConfig().getDouble("locations.black.coords.y"),
+                plugin.getConfig().getDouble("locations.black.coords.z"),
+                (float) plugin.getConfig().getDouble("locations.black.coords.yaw"),
+                (float) plugin.getConfig().getDouble("locations.black.coords.pitch"));
+    }
+
     public static Location getLobby() {
         return new Location(world,
                 plugin.getConfig().getDouble("locations.lobby.coords.x"),
@@ -22,7 +31,7 @@ public class Locations {
                 (float) plugin.getConfig().getDouble("locations.lobby.coords.pitch"));
     }
 
-    public static Location getStart(){
+    public static Location getStart() {
         return new Location(world,
                 plugin.getConfig().getDouble("locations.start.coords.x"),
                 plugin.getConfig().getDouble("locations.start.coords.y"),

@@ -7,6 +7,13 @@ maxImpostors: 1
 
 # Game locations
 locations:
+  black:
+    coords:
+      x: 118.5
+      y: 64
+      z: 388.5
+      yaw: 180.0
+      pitch: 0.0
   lobby:
     coords:
       x: 118.5
